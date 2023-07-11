@@ -24,9 +24,9 @@ elseif($_GET['aksi']=='hapussubmenu'){
   mysqli_query($koneksi,"DELETE FROM submenu  WHERE id_sub='$_GET[id_sub]'");
   echo "<script>window.location=('index.php?aksi=submenu')</script>";
   }
-elseif($_GET['aksi']=='hapusgolongan'){
-mysqli_query($koneksi,"DELETE FROM golongan  WHERE id_gol='$_GET[id_gol]'");
-echo "<script>window.location=('index.php?aksi=golongan')</script>";
+elseif($_GET['aksi']=='hapusaset'){
+mysqli_query($koneksi,"DELETE FROM aset  WHERE id_aset='$_GET[id_aset]'");
+echo "<script>window.location=('index.php?aksi=aset')</script>";
 }
 elseif($_GET['aksi']=='hapusjabatan'){
 mysqli_query($koneksi,"DELETE FROM jabatan  WHERE id_jabatan='$_GET[id_jabatan]'");

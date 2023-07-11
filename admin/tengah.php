@@ -520,7 +520,7 @@ echo"<div class='row'>
 				    ";
 			
 $no=0;
-$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori,ruang WHERE aset.id_kategori=kategori.id_kategori AND aset.id_ruang=ruang.id_ruang  ORDER BY aset.id_aset ASC");
+$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori,ruang WHERE aset.id_kategori=kategori.id_kategori AND aset.id_ruang=ruang.id_ruang  ORDER BY aset.id_aset DESC");
 while ($t=mysqli_fetch_array($sql)){	
 $no++;
                                     echo"
