@@ -510,27 +510,27 @@ echo"<div class='row'>
                                     <thead>
                                         <tr> <th>No</th>
                                             <th>Kategori</th>
-                                            <th>Ruangan</th>
-                                            <th>jumlah</th>	 
-                                            <th>kondisi</th>	 
                                             <th>nama aset</th>	
+                                            <th>Asal Barang</th>
+                                            <th>kondisi</th>	 
+                                            <th>aksi</th>	
                                              
                                         </tr>
                                     </thead><tbody>
 				    ";
 			
 $no=0;
-$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori,ruang WHERE aset.id_kategori=kategori.id_kategori AND aset.id_ruang=ruang.id_ruang  ORDER BY aset.id_aset DESC");
+$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori WHERE aset.id_kategori=kategori.id_kategori  ORDER BY aset.id_aset DESC");
 while ($t=mysqli_fetch_array($sql)){	
 $no++;
                                     echo"
                                         <tr><td>$no</td>
                                             <td>$t[kategori]</td>
-                                            <td>$t[nama_ruang]</td> 
-                                            <td>$t[jumlah]</td> 
+                                            <td>$t[nama_aset]</td> 
+                                            <td>$t[asal_aset]</td> 
                                             <td>$t[kondisi]</td>
 							<td><div class='btn-group'>
-                      <button type='button' class='btn btn-info'>$t[nama_aset]</button>
+                      <button type='button' class='btn btn-info'>aksi</button>
                       <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
                         <span class='caret'></span>
                         <span class='sr-only'>Toggle Dropdown</span>
@@ -574,26 +574,33 @@ echo"
                                              }
                                                 echo "
                                             </select><br><br>
-                                            <label>Pilih ruangan</label>
-                                            <select class='form-control select2' style='width: 100%;' name=id_ruang>
-                                            <option value='' selected>Pilih Ruangan</option>"; 
-                                             $sql=mysqli_query($koneksi,"SELECT * FROM ruang ORDER BY id_ruang");
-                                             while ($c=mysqli_fetch_array($sql))
-                                             {
-                                                echo "<option value=$c[id_ruang]>$c[nama_ruang]</option>";
-                                             }
-                                                echo "
+                                            <label>Asal Barang</label>
+                                            <select class='form-control select2' style='width: 100%;' name=asal_aset>
+                                            <option value='' selected>Pilih Asal Aset</option>
+                                            <option value='Pekon'>Pekon</option>
+                                            <option value='Hibah'>Hibah</option>
+                                            <option value='Swadaya'>Swadaya</option>
                                             </select><br><br>
-                                            <label>nama_aset</label>
+                                            <label>nama</label>
 						                    <input type='text' class='form-control' name='nama_aset'/><br>
-					                        <label>spek</label>
-						                    <input type='text' class='form-control' name='spek'/><br>
-                                            <label>jumlah</label>
-						                    <input type='text' class='form-control' name='jumlah'/><br>
-                                            <label>Tanggal Beli</label>
+					                        <label>Merek/Type</label>
+						                    <input type='text' class='form-control' name='merek'/><br>
+                                            <label>Keterangan</label>
+                                            <input type='text' class='form-control' name='keterangan'/>
+						                    <input type='hidden' class='form-control' value='1' name='jumlah'/><br>
+                                            <label>Tahun Perolehan</label>
 						                    <input type='date' class='form-control' name='tgl_beli'/><br>
                                             <label>Kondisi</label>
-						                    <input type='text' class='form-control' name='kondisi'/><br>
+                                            <select class='form-control select2' style='width: 100%;' name=kondisi>
+                                            <option value='' selected>Pilih Kondisi</option>
+                                            <option value='Baik'>Baik</option>
+                                            <option value='Perbaikan'>Perbaikan</option>
+                                            <option value='Rusak'>Rusak</option>
+                                            </select><br><br>
+                                            <label>Nilai Perolehan</label>
+						                    <input type='text' class='form-control' name='nilai'/><br>
+                                            <label>Luas/Ukuran</label>
+						                    <input type='text' class='form-control' name='luas'/><br>
                                             <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
                                             <button type='submit' class='btn btn-primary'>Save </button>
                                         </div>
@@ -608,7 +615,7 @@ echo"
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 elseif($_GET['aksi']=='editaset'){
-$tebaru=mysqli_query($koneksi," SELECT * FROM aset,kategori,ruang WHERE aset.id_kategori=kategori.id_kategori AND aset.id_ruang=ruang.id_ruang AND aset.id_aset=$_GET[id_aset] ");
+$tebaru=mysqli_query($koneksi," SELECT * FROM aset,kategori WHERE aset.id_kategori=kategori.id_kategori AND aset.id_aset=$_GET[id_aset] ");
 $t=mysqli_fetch_array($tebaru);
 echo"
 <div class='row'>
@@ -628,27 +635,35 @@ echo"
                                                 echo "<option value=$c[id_kategori]>$c[kategori]</option>";
                                              }
                                                 echo "
-                                            </select><br><br>
-                                            <label>Pilih ruangan</label>
-                                            <select class='form-control select2' style='width: 100%;' name=id_ruang>
-                                            <option value='$t[id_ruang]' selected>$t[nama_ruang]</option>"; 
-                                             $sql=mysqli_query($koneksi,"SELECT * FROM ruang ORDER BY id_ruang");
-                                             while ($c=mysqli_fetch_array($sql))
-                                             {
-                                                echo "<option value=$c[id_ruang]>$c[nama_ruang]</option>";
-                                             }
-                                                echo "
-                                            </select><br><br>
-                                            <label>nama_aset</label>
-						                    <input type='text' class='form-control' value='$t[nama_aset]' name='nama_aset'/><br>
-					                        <label>spek</label>
-						                    <input type='text' class='form-control' value='$t[spek]' name='spek'/><br>
-                                            <label>jumlah</label>
-						                    <input type='text' class='form-control' value='$t[jumlah]' name='jumlah'/><br>
-                                            <label>Tanggal Beli</label>
-						                    <input type='date' class='form-control' value='$t[tgl_beli]' name='tgl_beli'/><br>
-                                            <label>Kondisi</label>
-						                    <input type='text' class='form-control' value='$t[kondisi]'  name='kondisi'/><br>
+                                                </select><br><br>
+                                                <label>Asal Barang</label>
+                                                <select class='form-control select2' style='width: 100%;' name=asal_aset>
+                                                <option value='$t[asal_aset]' selected>$t[asal_aset]</option>
+                                                <option value='Pekon'>Pekon</option>
+                                                <option value='Hibah'>Hibah</option>
+                                                <option value='Swadaya'>Swadaya</option>
+                                                </select><br><br>
+                                                <label>nama</label>
+                                                <input type='text' class='form-control' value='$t[nama_aset]' name='nama_aset'/><br>
+                                                <label>Merek/Type</label>
+                                                <input type='text' class='form-control' value='$t[merek]' name='merek'/><br>
+                                                <label>Keterangan</label>
+                                                <input type='text' class='form-control'  value='$t[keterangan]' name='keterangan'/>
+                                                <input type='hidden' class='form-control' value='1' name='jumlah'/><br>
+                                                <label>Tahun Perolehan</label>
+                                                <input type='date' class='form-control' value='$t[tgl_beli]' name='tgl_beli'/><br>
+                                                <label>Kondisi</label>
+                                                <select class='form-control select2' style='width: 100%;' name=kondisi>
+                                                <option value='$t[kondisi]' selected>$t[kondisi]</option>
+                                                <option value='Baik'>Baik</option>
+                                                <option value='Perbaikan'>Perbaikan</option>
+                                                <option value='Rusak'>Rusak</option>
+                                                </select><br><br>
+                                                <label>Nilai Perolehan</label>
+                                                <input type='text' class='form-control' value='$t[nilai]' name='nilai'/><br>
+                                                <label>Luas/Ukuran</label>
+                                                <input type='text' class='form-control' value='$t[luas]'  name='luas'/><br>
+                            
                               
 		
     	<div class='modal-footer'>

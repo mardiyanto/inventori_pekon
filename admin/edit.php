@@ -7,8 +7,8 @@
   }
 ///////////////////////////lihat/////////////////////////////////////////////
 if($_GET['aksi']=='proseseditaset'){
-mysqli_query($koneksi,"UPDATE aset SET id_kategori='$_POST[id_kategori]',id_ruang='$_POST[id_ruang]',nama_aset='$_POST[nama_aset]',
-spek='$_POST[spek]',jumlah='$_POST[jumlah]',tgl_beli='$_POST[tgl_beli]',kondisi='$_POST[kondisi]' WHERE id_aset='$_GET[id_aset]'");
+mysqli_query($koneksi,"UPDATE aset SET id_kategori='$_POST[id_kategori]',asal_aset='$_POST[asal_aset]',nama_aset='$_POST[nama_aset]',merek='$_POST[merek]',
+nilai='$_POST[nilai]',jumlah='$_POST[jumlah]',tgl_beli='$_POST[tgl_beli]',kondisi='$_POST[kondisi]',keterangan='$_POST[keterangan]',luas='$_POST[luas]' WHERE id_aset='$_GET[id_aset]'");
 echo "<script>window.location=('index.php?aksi=aset')</script>";
 }
 elseif($_GET['aksi']=='proseseditruangan'){

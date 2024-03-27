@@ -7,8 +7,8 @@
   }
 ///////////////////////////lihat/////////////////////////////////////////////
 if($_GET['aksi']=='inputaset'){
-mysqli_query($koneksi,"insert into aset (id_kategori,id_ruang,nama_aset,spek,jumlah,tgl_beli,kondisi) 
-values ('$_POST[id_kategori]','$_POST[id_ruang]','$_POST[nama_aset]','$_POST[spek]','$_POST[jumlah]','$_POST[tgl_beli]','$_POST[kondisi]')");  
+mysqli_query($koneksi,"insert into aset (id_kategori,asal_aset,nama_aset,merek,nilai,jumlah,tgl_beli,kondisi,keterangan,luas) 
+values ('$_POST[id_kategori]','$_POST[asal_aset]','$_POST[nama_aset]','$_POST[merek]','$_POST[nilai]','$_POST[jumlah]','$_POST[tgl_beli]','$_POST[kondisi]','$_POST[keterangan]','$_POST[luas]')");  
 echo "<script>window.location=('index.php?aksi=aset')</script>";
 }
 if($_GET['aksi']=='inputruangan'){
