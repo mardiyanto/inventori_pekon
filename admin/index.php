@@ -148,7 +148,7 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.3.0
         </div>
-        <strong>Copyright &copy; 2014-2016 <a href="#">Almsaeed Studio / Web Progremer (<?php echo"$k_k[akabest]";?> )</a>.</strong>  All rights reserved.
+        <strong>Copyright &copy; 2014-2016 <a href="#">Almsaeed Studio / Web Progremer</a>.</strong>  All rights reserved.
       </footer>
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->

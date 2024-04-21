@@ -177,38 +177,174 @@ $no++;
 <?php if($_GET['aksi']=='aset'){ ?>
 	<div class='row'>
                 <div class='col-lg-12'>	<center>
- 		<h4>LAPORAN </h4>
+ 		<h3>LAPORAN HASIL INVENTARISASI (LHI) ASET </h3>
+		 <h3>DESA <?php echo"$k_k[nama]";?> </h3>
  	</center>	
+	
 	 <table class="table table-bordered table-striped" id="table-datatable">
                                     <thead>
                                         <tr> <th>No</th>
                                             <th>Nama Aset</th>
                                             <th>Kategori</th>
-                                            <th>Ruangan</th>
-											<th>Spesifikasi</th>											
-											<th>Jumlah</th>
+                                            <th>Merek</th>
+																						
+											<th>Tgl Beli</th>
 											<th>Kondisi</th>
-											<th>Tgl Beli</th>											
+											<th>Keterangan</th>
+											<th>Luas</th>	
+											<th>Nilai</th>										
                                         </tr>
                                     </thead><tbody>
 			
-	<?php		
+	<?php	
+	setlocale(LC_ALL, 'id_ID');
+
+	// Format tanggal dalam bahasa Indonesia
+	$tanggal = strftime('%A, %d %B %Y', strtotime('today'));	
 $no=0;
-$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori,ruang WHERE aset.id_kategori=kategori.id_kategori AND aset.id_ruang=ruang.id_ruang  ORDER BY aset.id_aset ASC");
-while ($t=mysqli_fetch_array($sql)){	
+$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori WHERE aset.id_kategori=kategori.id_kategori   ORDER BY aset.id_aset ASC");
+while ($t=mysqli_fetch_array($sql)){
+$nilai = $t['nilai']; // Ambil nilai dari data Anda
+$nilai_format = number_format($nilai, 0, ',', '.'); // Format nilai sebagai mata uang rupiah
+$total=$total+$nilai;
 $no++;
                                     echo"
                                         <tr><td>$no</td>
                                             <td>$t[nama_aset]</td>
                                             <td>$t[kategori]</td>
-											<td>$t[nama_ruang]</td>
-											<td>$t[spek]</td>
-											<td>$t[jumlah]</td>
-											<td>$t[kondisi]</td>
+											<td>$t[merek]</td>
+											
 											<td>$t[tgl_beli]</td>
-                                        </tr>";
+											<td>$t[kondisi]</td>
+											<td>$t[keterangan]</td>
+											<td>$t[luas]</td>
+											<td>Rp.$nilai_format</td>
+                                        </tr>
+										";
 }?>
+<tr><td colspan="8">&nbsp;</td>
+                                          <td><?php echo "Rp." . number_format($total, 0, ',', '.'); ?></td>
+                                        </tr>
                                     </tbody></table>
+									<table width="100%" border="0">
+  <tr>
+    <td width="39%"><div align="left">Mengetahui,</div></td>
+    <td width="33%">&nbsp;</td>
+    <td width="28%"><div align="left">Pandansari Selatan, <?php echo "$tanggal"; ?></div></td>
+  </tr>
+  <tr>
+    <td><div align="left">Kepala Pekon Pandansari Selatan,</div></td>
+    <td>&nbsp;</td>
+    <td> <div align="left">Sekretaris Pekon,</div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>PURYANTO</td>
+    <td>&nbsp;</td>
+    <td>NGADIRAN</td>
+  </tr>
+</table>
+									</div>
+               </div>								
+<?php } ?>
+<?php if($_GET['aksi']=='asetketergori'){ ?>
+	<div class='row'>
+                <div class='col-lg-12'>	<center>
+ 		<h3>LAPORAN HASIL INVENTARISASI (LHI) ASET </h3>
+		 <h3>DESA <?php echo"$k_k[nama]";?> </h3>
+ 	</center>	
+	
+	 <table class="table table-bordered table-striped" id="table-datatable">
+                                    <thead>
+                                        <tr> <th>No</th>
+                                            <th>Nama Aset</th>
+                                            <th>Kategori</th>
+                                            <th>Merek</th>
+																						
+											<th>Tgl Beli</th>
+											<th>Kondisi</th>
+											<th>Keterangan</th>
+											<th>Luas</th>	
+											<th>Nilai</th>										
+                                        </tr>
+                                    </thead><tbody>
+			
+	<?php	
+	setlocale(LC_ALL, 'id_ID');
+
+	// Format tanggal dalam bahasa Indonesia
+	$tanggal = strftime('%A, %d %B %Y', strtotime('today'));	
+$no=0;
+$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori WHERE aset.id_kategori=kategori.id_kategori and kategori.id_kategori='$_GET[id_kategori]'   ORDER BY aset.id_aset ASC");
+while ($t=mysqli_fetch_array($sql)){
+$nilai = $t['nilai']; // Ambil nilai dari data Anda
+$nilai_format = number_format($nilai, 0, ',', '.'); // Format nilai sebagai mata uang rupiah
+$total=$total+$nilai;
+$no++;
+                                    echo"
+                                        <tr><td>$no</td>
+                                            <td>$t[nama_aset]</td>
+                                            <td>$t[kategori]</td>
+											<td>$t[merek]</td>
+											
+											<td>$t[tgl_beli]</td>
+											<td>$t[kondisi]</td>
+											<td>$t[keterangan]</td>
+											<td>$t[luas]</td>
+											<td>Rp.$nilai_format</td>
+                                        </tr>
+										";
+}?>
+<tr><td colspan="8">&nbsp;</td>
+                                          <td><?php echo "Rp." . number_format($total, 0, ',', '.'); ?></td>
+                                        </tr>
+                                    </tbody></table>
+									<table width="100%" border="0">
+  <tr>
+    <td width="39%"><div align="left">Mengetahui,</div></td>
+    <td width="33%">&nbsp;</td>
+    <td width="28%"><div align="left">Pandansari Selatan, <?php echo "$tanggal"; ?></div></td>
+  </tr>
+  <tr>
+    <td><div align="left">Kepala Pekon Pandansari Selatan,</div></td>
+    <td>&nbsp;</td>
+    <td> <div align="left">Sekretaris Pekon,</div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>PURYANTO</td>
+    <td>&nbsp;</td>
+    <td>NGADIRAN</td>
+  </tr>
+</table>
 									</div>
                </div>								
 <?php } ?>

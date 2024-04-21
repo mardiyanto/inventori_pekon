@@ -43,6 +43,50 @@ echo"<div class='row'>
 elseif($_GET['aksi']=='ikon'){
 include "../ikon.php";
 }
+elseif($_GET['aksi']=='laporan'){
+    echo"
+<div class='row'>
+                <div class='col-lg-12'>
+                    <div class='panel panel-default'>
+                        <div class='panel-heading'>EDIT
+                        </div>
+                        <div class='panel-body'>
+                        <table id='example1' class='table table-bordered table-striped'>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>jumlah aset</th>
+                                <th>aksi</th>
+                            </tr>
+                        </thead>
+        ";
+        $no=0;
+        $query = "SELECT kategori.kategori,kategori.id_kategori, SUM(aset.jumlah) AS total_jumlah
+FROM aset
+INNER JOIN kategori ON aset.id_kategori = kategori.id_kategori
+GROUP BY aset.id_kategori";
+
+// Eksekusi query
+$result = mysqli_query($koneksi, $query);
+while ($t = mysqli_fetch_assoc($result)) {
+  
+$no++;    
+                        echo"<tbody>
+                            <tr>
+                                <td>$no</td>
+                                <td>$t[kategori]</td>
+                                <td>$t[total_jumlah]</td>
+                                <td><a href='laporan.php?aksi=asetketergori&id_kategori=$t[id_kategori]' target='_blank' class='btn btn-info' ><i class='fa fa-print' ></i></span></a></td>
+                            </tr>
+                           
+                        </tbody>";
+}
+                    echo"</table>
+
+</div> </div></div> </div>
+";	
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 elseif($_GET['aksi']=='kategori'){
 echo"
@@ -598,7 +642,7 @@ echo"
                                             <option value='Rusak'>Rusak</option>
                                             </select><br><br>
                                             <label>Nilai Perolehan</label>
-						                    <input type='text' class='form-control' name='nilai'/><br>
+						                    <input type='number' class='form-control' name='nilai'/><br>
                                             <label>Luas/Ukuran</label>
 						                    <input type='text' class='form-control' name='luas'/><br>
                                             <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
