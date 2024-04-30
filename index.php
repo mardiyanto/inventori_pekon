@@ -102,15 +102,15 @@ include "koneksi.php";
 
 						<!-- Work -->
 							<article id="work">
-							<h3 class="major">DATA <?php echo"$k_k[alias]";?>  <?php echo"$k_k[nama]";?> </h3>
+							<h3 class="major">DATA DESA <?php echo"$k_k[alias]";?>  <?php echo"$k_k[nama]";?> </h3>
 									<div class="table-wrapper">
 									<table id='example1' class='table table-bordered table-striped'>
                                     <thead>
                                         <tr> <th>No</th>
-                                            <th>Kategori</th>
-                                            <th>nama</th>
+                                            <th>nama Aset</th>
                                             <th>jumlah</th>	 
-                                            <th>kondisi</th>	 
+                                            <th>kondisi</th>	
+											<th>Nilai Porelahan</th>											
           
                                              
                                         </tr>
@@ -118,15 +118,17 @@ include "koneksi.php";
 				   <?php
 			
 $no=0;
-$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori,ruang WHERE aset.id_kategori=kategori.id_kategori AND aset.id_ruang=ruang.id_ruang  ORDER BY aset.id_aset ASC");
-while ($t=mysqli_fetch_array($sql)){	
+$sql=mysqli_query($koneksi," SELECT * FROM aset,kategori WHERE aset.id_kategori=kategori.id_kategori   ORDER BY aset.id_aset ASC");
+while ($t=mysqli_fetch_array($sql)){
+$nilai = $t['nilai']; // Ambil nilai dari data Anda
+$nilai_format = number_format($nilai, 0, ',', '.'); // Format nilai sebagai mata uang rupiah	
 $no++;
                                     echo"
                                         <tr><td>$no</td>
-                                            <td>$t[kategori]</td>
                                             <td>$t[nama_aset]</td> 
                                             <td>$t[jumlah]</td> 
                                             <td>$t[kondisi]</td>
+											<td>Rp. $nilai_format</td>
 						
                                         </tr>";
 }?>

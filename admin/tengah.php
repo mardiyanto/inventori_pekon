@@ -581,7 +581,7 @@ $no++;
                       </button>
                       <ul class='dropdown-menu' role='menu'>
                         <li><a href='index.php?aksi=editaset&id_aset=$t[id_aset]' title='Edit'><i class='fa fa-pencil'></i>edit</a></li>
-						<li><a href='hapus.php?aksi=hapusaset&id_aset=$t[id_aset]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_aset] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
+						<li><a href='hapus.php?aksi=hapusaset&id_aset=$t[id_aset]&gbr=$t[gambar]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_aset] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
                         </ul>
                     </div></td>
                                         </tr>";
@@ -606,7 +606,7 @@ echo"
                                             <h4 class='modal-title' id='H3'>Input Data</h4>
                                         </div>
                                         <div class='modal-body'>
-                                           <form role='form' method='post' action='input.php?aksi=inputaset'>
+                                           <form role='form' enctype='multipart/form-data' method='post' action='input.php?aksi=inputaset'>
                                             <div class='form-group'>
                                             <label>Pilih Kategori</label>
                                             <select class='form-control select2' style='width: 100%;' name=id_kategori>
@@ -645,6 +645,8 @@ echo"
 						                    <input type='number' class='form-control' name='nilai'/><br>
                                             <label>Luas/Ukuran</label>
 						                    <input type='text' class='form-control' name='luas'/><br>
+                                            <label>Gambar</label>
+                                            <input type='file' class='smallInput' size='50'name='gambar'/><br><br />
                                             <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
                                             <button type='submit' class='btn btn-primary'>Save </button>
                                         </div>
@@ -668,7 +670,7 @@ echo"
                         <div class='panel-heading'>EDIT  $t[nama_aset] $t[id_aset]
                         </div>
                         <div class='panel-body'>
-<form id='form1'  method='post' action='edit.php?aksi=proseseditaset&id_aset=$t[id_aset]'>
+<form id='form1'  enctype='multipart/form-data' method='post' action='edit.php?aksi=proseseditaset&id_aset=$t[id_aset]&gb=$t[gambar]'>
 <div class='form-group'>
                                             <label>Pilih Kategori</label>
                                             <select class='form-control select2' style='width: 100%;' name=id_kategori>
@@ -707,6 +709,9 @@ echo"
                                                 <input type='text' class='form-control' value='$t[nilai]' name='nilai'/><br>
                                                 <label>Luas/Ukuran</label>
                                                 <input type='text' class='form-control' value='$t[luas]'  name='luas'/><br>
+                                                <img  src='../foto/data/$t[gambar]' alt='Preview Gambar' style='max-width: 200px; max-height: 200px;'></br>
+                    <label>Gambar</label>
+                    <input type='file' class='smallInput' size='50'name='gambar'/><br><br />
                             
                               
 		
