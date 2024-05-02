@@ -25,7 +25,10 @@ elseif($_GET['aksi']=='hapussubmenu'){
   echo "<script>window.location=('index.php?aksi=submenu')</script>";
   }
 elseif($_GET['aksi']=='hapusaset'){
-mysqli_query($koneksi,"DELETE FROM aset  WHERE id_aset='$_GET[id_aset]'");
+  mysqli_query($koneksi,"DELETE FROM aset  WHERE id_aset='$_GET[id_aset]'");
+  $b=$_GET['gbr'];
+  $pathFile="../foto/data/$b";	   
+  unlink($pathFile);  
 echo "<script>window.location=('index.php?aksi=aset')</script>";
 }
 elseif($_GET['aksi']=='hapusjabatan'){
