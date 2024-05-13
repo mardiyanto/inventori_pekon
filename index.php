@@ -62,7 +62,7 @@ include "koneksi.php";
 						<nav>
 							<ul>
 								<li><a href="#intro">LOGIN</a></li>
-								<li><a href="#contact">Hubungi</a></li>
+								<!-- <li><a href="#contact">Hubungi</a></li> -->
 								<li><a href="#work">INVENTORI</a></li>
 								<!--
 								<li><a href="#pegawai">PEGAWAI</a></li>
@@ -104,6 +104,19 @@ include "koneksi.php";
 							<article id="work">
 							<h3 class="major">DATA DESA <?php echo"$k_k[alias]";?>  <?php echo"$k_k[nama]";?> </h3>
 									<div class="table-wrapper">
+									<form method="post" action="caridata.php">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" placeholder="nama aset" name="nama_aset" required="required" />
+										</div>
+										<div class="field half">
+										<ul class="actions">
+										<li><input type="submit" value="Cari" class="primary" /></li>
+									</ul>
+										</div>
+									</div>
+									
+								</form>
 									<table id='example1' class='table table-bordered table-striped'>
                                     <thead>
                                         <tr> <th>No</th>
