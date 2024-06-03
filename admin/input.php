@@ -9,35 +9,42 @@
   $time=date ('h:i A');
 ///////////////////////////lihat/////////////////////////////////////////////
 if($_GET['aksi']=='inputaset'){
-	if (empty($_POST[nama_aset]) || empty($_POST[asal_aset])){
-		echo "<script>window.alert('Data yang Anda isikan belum lengkap');
-			   window.location=('javascript:history.go(-1)')</script>";
-			}
-	 else{
-		   
-	   $lokasi_file=$_FILES[gambar][tmp_name];
-	   if(empty($lokasi_file)){
-	   mysqli_query($koneksi,"insert into aset (id_kategori,asal_aset,nama_aset,merek,nilai,jumlah,tgl_beli,kondisi,keterangan,luas) 
-	   values ('$_POST[id_kategori]','$_POST[asal_aset]','$_POST[nama_aset]','$_POST[merek]','$_POST[nilai]','$_POST[jumlah]','$_POST[tgl_beli]','$_POST[kondisi]','$_POST[keterangan]','$_POST[luas]')");
-		  
-	   echo "<script>window.location=('index.php?aksi=aset')</script>";
-	   }else{
-	   $tanggal=date("dmYhis");
-	   $file=$_FILES['gambar']['tmp_name'];
-	   $file_name=$_FILES['gambar']['name'];
-	   copy($file,"../foto/data/".$tanggal.".jpg");
-	   mysqli_query($koneksi,"insert into aset (id_kategori,asal_aset,nama_aset,merek,nilai,jumlah,tgl_beli,kondisi,keterangan,luas,gambar) 
-	   values ('$_POST[id_kategori]','$_POST[asal_aset]','$_POST[nama_aset]','$_POST[merek]','$_POST[nilai]','$_POST[jumlah]','$_POST[tgl_beli]','$_POST[kondisi]','$_POST[keterangan]','$_POST[luas]','$tanggal.jpg')");
-		  
-	   echo "<script>window.alert('data berhasil di simpan');
-	   window.location=('index.php?aksi=aset')</script>";
-		  }
-		 }
+    if (empty($_POST['nama_aset']) || empty($_POST['asal_aset'])){
+        echo "<script>alert('Data yang Anda isikan belum lengkap'); history.go(-1);</script>";
+    } else {
+        $lokasi_file = $_FILES['gambar']['tmp_name'];
+        $nama_aset = mysqli_real_escape_string($koneksi, $_POST['nama_aset']);
+        $asal_aset = mysqli_real_escape_string($koneksi, $_POST['asal_aset']);
+        $id_kategori = mysqli_real_escape_string($koneksi, $_POST['id_kategori']);
+        $merek = mysqli_real_escape_string($koneksi, $_POST['merek']);
+        $nilai = mysqli_real_escape_string($koneksi, $_POST['nilai']);
+        $jumlah = mysqli_real_escape_string($koneksi, $_POST['jumlah']);
+        $tgl_beli = mysqli_real_escape_string($koneksi, $_POST['tgl_beli']);
+        $kondisi = mysqli_real_escape_string($koneksi, $_POST['kondisi']);
+        $keterangan = mysqli_real_escape_string($koneksi, $_POST['keterangan']);
+        $luas = mysqli_real_escape_string($koneksi, $_POST['luas']);
+
+        if(empty($lokasi_file)){
+            $query = $koneksi->prepare("INSERT INTO aset (id_kategori, asal_aset, nama_aset, merek, nilai, jumlah, tgl_beli, kondisi, keterangan, luas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $query->bind_param("ssssssssss", $id_kategori, $asal_aset, $nama_aset, $merek, $nilai, $jumlah, $tgl_beli, $kondisi, $keterangan, $luas);
+            $query->execute();
+            echo "<script>alert('Data berhasil disimpan'); window.location=('index.php?aksi=aset');</script>";
+        } else {
+            $tanggal = date("dmYhis");
+            $file_name = $_FILES['gambar']['name'];
+            move_uploaded_file($file, "../foto/data/".$tanggal.".jpg");
+            $gambar = $tanggal.".jpg";
+            $query = $koneksi->prepare("INSERT INTO aset (id_kategori, asal_aset, nama_aset, merek, nilai, jumlah, tgl_beli, kondisi, keterangan, luas, gambar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $query->bind_param("sssssssssss", $id_kategori, $asal_aset, $nama_aset, $merek, $nilai, $jumlah, $tgl_beli, $kondisi, $keterangan, $luas, $gambar);
+            $query->execute();
+            echo "<script>alert('Data berhasil disimpan dengan gambar'); window.location=('index.php?aksi=aset');</script>";
+        }
+    }
 }
 if($_GET['aksi']=='inputruangan'){
 	mysqli_query($koneksi,"insert into ruang (nama_ruang) values ('$_POST[nama_ruang]')");  
 	echo "<script>window.location=('index.php?aksi=ruangan')</script>";
-	}
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 elseif($_GET['aksi']=='inputmenu'){
 	mysqli_query($koneksi,"insert into menu (nama_menu,link,link_b,status,icon_menu,aktif) values ('$_POST[nama_menu]','$_POST[link]','$_POST[link_b]','$_POST[status]','$_POST[icon_menu]','$_POST[aktif]')");  
@@ -115,4 +122,5 @@ elseif($_GET['aksi']=='inputpangkujabatan'){
 	values ('$_POST[id_pegawai]','$_POST[id_pkjab]','$_POST[nomor_surat]','$_POST[tanggal_surat]')");
 echo "<script>window.location=('index.php?aksi=pangkujabatan')</script>";
 }
+?>
 ?>
